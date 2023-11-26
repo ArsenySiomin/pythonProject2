@@ -73,7 +73,7 @@ def print_user():
 root = Tk()
 root.title('Чё писать')
 root.geometry('4000x2000')
-label_title=Label(root,text="ghndgyh")
+label_title=Label(root,text="ghndgyh",font=('Arial',48))
 label_title.pack()
 root.mainloop()
 
