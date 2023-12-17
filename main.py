@@ -1,7 +1,37 @@
 from tkinter import *
 from random import randint
+import pymysql
+
+connection = pymysql.connect(
+    host='127.0.0.1',
+    port=3306,
+    user='root',
+    password='12345678',
+    database='Masochist_game',
+    cursorclass=pymysql.cursors.DictCursor
+)
+
+with connection.cursor() as cursor:
+    create_users_table = """
+    CREATE TABLE IF NOT EXISTS `users` (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    login VARCHAR(32) NOT NULL,
+    password VARCHAR(32) NOT NULL,
+    balance DECIMAL(10,2) DEFAULT 0.0);
+    """
+    cursor.execute(create_users_table)
 
 
+def select_all():
+    with connection.cursor() as cursor:
+        query = 'SELECT * from users'
+        cursor.execute(query)
+        records = cursor.fetchall()
+        for i in records:
+            print(i)
+
+
+select_all()
 def earn_money():
     a = randint(0, 1000)
     b = randint(0, 1000)
@@ -73,26 +103,6 @@ def print_user():
 root = Tk()
 root.title('Чё писать')
 root.geometry('4000x2000')
-label_title=Label(root,text="ghndgyh",font=('Arial',48))
+label_title = Label(root, text="ghndgyh", font=('Arial', 48))
 label_title.pack()
 root.mainloop()
-
-'''hungry = 0
-mood = 0
-balance = 0
-while True:
-    print_user()
-    choice_user = int(input())
-    if choice_user == 1:
-        print('Ваш баланс равен', balance)
-
-    elif choice_user == 2:
-        print('ваш баланс сейчас равен', balance)
-        balance = earn_money()
-        print('ваш баланс сейчас равен', balance)
-
-    elif choice_user == 3:
-        print_tamagochi()
-    else:
-        break
-'''
